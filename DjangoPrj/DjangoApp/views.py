@@ -52,7 +52,9 @@ def booking_details(request):
             return Response({"Check out date cannot be earlier than check in date"})
         elif booking_post_serializer.is_valid():
             booking_post_serializer.save()
-        return Response({"Message": request.data["hotel_name"] + " Booked Successfully"})
+            booking_qs = Bookings.objects.filter(hotel_name=hotel_name)
+            booking_num = booking_qs[0].booking_id
+            return Response({"Message: Hotel " + hotel_name + " booked successfully. Your booking confirmation number is " + str(booking_num)})
 
 
 @api_view(['GET'])
@@ -61,4 +63,12 @@ def hotel_filters(request, pk):
         hotel_list = Hotels.objects.get(id=pk)
         hotel_get_serializer = HotelSerializers(hotel_list, many=False)
         return Response(hotel_get_serializer.data)
+
+
+@api_view(['GET'])
+def booking_filters(request, num):
+    if request.method == "GET":
+        booking_list = Bookings.objects.get(booking_id=num)
+        booking_get_serializer = BookingSerializers(booking_list, many=False)
+        return Response(booking_get_serializer.data)
 

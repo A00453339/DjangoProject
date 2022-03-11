@@ -18,4 +18,4 @@ class Bookings(models.Model):
     check_out_date = models.DateField(null=False)
 
     def __str__(self):
-        return self.name
+        return '%s      %s' % (self.hotel_name, self.booking_id)
