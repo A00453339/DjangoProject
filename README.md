@@ -19,6 +19,7 @@ check_out_date = date for check-out
 Following are the urls for 2 GET requests supported by the application:-
 1) http://127.0.0.1:8000/app/hotel_list/ - This will display all the hotels present in Hotels table
 2) http://127.0.0.1:8000/app/booking/ - This will display all the bookings made so far.
+3) http://127.0.0.1:8000/app/bookings/<booking_id> - This will display the booking details for the booking id passed in GET request.
 
 Following are the urls for 2 POST requests supported by the application:-
 1) http://127.0.0.1:8000/app/hotel_list/ - Sample request
@@ -29,7 +30,8 @@ Following are the urls for 2 POST requests supported by the application:-
 	"available" : "NO"
 }
 
-3) http://127.0.0.1:8000/app/booking/ - Sample requests
+2) http://127.0.0.1:8000/app/booking/ - Sample requests
+
 {
 	"hotel_name":"TAJ",
 	"check_in_date":"2022-04-01",
