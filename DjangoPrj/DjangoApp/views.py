@@ -35,6 +35,7 @@ def booking_details(request):
     if request.method == "POST":
         book_val = request.data
         hotel_name = request.data["hotel_name"]
+        guest_name = request.data["guest_name"]
         hotel_check = Hotels.objects.filter(name=hotel_name)
         hotel_avb = Hotels.objects.filter(name=hotel_name).filter(available='YES')
         booking_post_serializer = BookingSerializers(data=book_val)
@@ -50,9 +51,11 @@ def booking_details(request):
             return Response({"Check in date cannot be blank"})
         elif new_check_out_date < new_check_in_date:
             return Response({"Check out date cannot be earlier than check in date"})
+        elif request.data["num_of_rooms"]*2 < request.data["num_of_guests"]:
+            return Response ({"Maximum number of guests allowed per room is 2"})
         elif booking_post_serializer.is_valid():
             booking_post_serializer.save()
-            booking_qs = Bookings.objects.filter(hotel_name=hotel_name)
+            booking_qs = Bookings.objects.filter(hotel_name=hotel_name).filter(guest_name=guest_name)
             booking_num = booking_qs[0].booking_id
             return Response({"Message: Hotel " + hotel_name + " booked successfully. Your booking confirmation number is " + str(booking_num)})
 
@@ -69,6 +72,15 @@ def hotel_filters(request, pk):
 def booking_filters(request, num):
     if request.method == "GET":
         booking_list = Bookings.objects.get(booking_id=num)
+        print(type(booking_list))
         booking_get_serializer = BookingSerializers(booking_list, many=False)
+        return Response(booking_get_serializer.data)
+
+
+@api_view(['GET'])
+def booking_filters_name(request, name):
+    if request.method == "GET":
+        booking_list = Bookings.objects.filter(guest_name=name)
+        booking_get_serializer = BookingSerializers(booking_list, many=True)
         return Response(booking_get_serializer.data)
 
