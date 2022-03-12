@@ -21,7 +21,7 @@ guest_name = Name of one of the guests
 
 Following are the urls for 2 GET requests supported by the application:-
 1) http://127.0.0.1:8000/app/hotel_list/ - This will display all the hotels present in Hotels table
-2) http://127.0.0.1:8000/app/booking/ - This will display all the bookings made so far.
+2) http://127.0.0.1:8000/app/bookings/ - This will display all the bookings made so far.
 3) http://127.0.0.1:8000/app/bookings/<booking_id> - This will display the booking details for the booking id passed in GET request.
 4) http://127.0.0.1:8000/app/bookings/Gagan/<guest_name> - This will display all the bookings made by a guest.
 
